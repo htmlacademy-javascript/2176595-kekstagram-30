@@ -87,7 +87,7 @@ const createProfile = () => {
     photos.push({
       id: i,
       url: `photos/${i}.jpg`,
-      likes: getRandomInteger(LikesCount.MIN_LENGTH,LikesCount.MAX_LENGTH),
+      likes: getRandomInteger(LikesCount.MIN,LikesCount.MAX),
       comments: Array.from({length:getRandomInteger(CommentsCount.MIN, CommentsCount.MAX)}, generateComment),
       description: getRandomArrayElement(DESCRIPTIONS),
     });
