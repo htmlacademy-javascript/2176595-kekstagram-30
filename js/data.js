@@ -95,6 +95,4 @@ const createProfile = () => {
   return photos;
 };
 
-console.log(createProfile());
-
 export {createMessage, createIdGenerator, getIdComment, generateComment, createProfile};
