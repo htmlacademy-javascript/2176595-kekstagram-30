@@ -1,4 +1,4 @@
 import { createProfile } from './data.js';
-console.log(createProfile());
+createProfile();
 
 import './picture.js';
