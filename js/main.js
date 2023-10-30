@@ -1,4 +1,6 @@
 import { createProfile } from './data.js';
-createProfile();
+import { renderPictures } from './picture.js';
 
-import './picture.js';
+renderPictures(createProfile());
+
+
