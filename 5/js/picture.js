@@ -1,3 +1,5 @@
+import { renderBigPicture } from './render-big-picture';
+
 const renderPictures = (pictures) => {
   const similarListPictures = document.querySelector('.pictures');
   const similarPicturesTemplate = document.querySelector('#picture')
@@ -16,10 +18,11 @@ const renderPictures = (pictures) => {
     pictureElement.querySelector('.picture__likes').textContent = pictureData.likes;
     //Количество комментариев comments выведите в блок .picture__comments.
     pictureElement.querySelector('.picture__comments').textContent = pictureData.comments.length;
+    pictureElement.addEventListener('click', () => renderBigPicture(pictureData));
     similarListFragment.appendChild(pictureElement);
   });
 
   similarListPictures.appendChild(similarListFragment);
 };
 
-export { renderPictures};
+export {renderPictures};
