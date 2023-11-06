@@ -1,5 +1,7 @@
 import { createProfile } from './data.js';
-import { renderPictures } from './picture.js';
-import { renderBigPicture } from './render-big-picture.js';
+import { renderThumbnails } from './thumbnail.js';
+import { renderGallery } from './gallery.js';
+import { showPicture } from './picture.js';
 
-renderPictures(createProfile());
+
+renderGallery(createProfile());

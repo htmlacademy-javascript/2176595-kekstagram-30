@@ -13,7 +13,7 @@ const CommentsCount = {
 
 const AvatarsNumber = {
   MIN: 1,
-  MAX: 2,
+  MAX: 6,
 };
 
 const COMMENTS = [
