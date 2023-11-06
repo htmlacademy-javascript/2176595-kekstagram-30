@@ -1,4 +1,7 @@
 import { createProfile } from './data.js';
-console.log(createProfile());
+import { renderThumbnails } from './thumbnail.js';
+import { renderGallery } from './gallery.js';
+import { showPicture } from './picture.js';
 
-import './picture.js';
+
+renderGallery(createProfile());
