@@ -1,16 +1,66 @@
 import { isEscapeKey } from './util.js';
-import { renderComments } from './comment.js';
-import { initCommentList } from './comment.js';
+
+const COMMENT_COUNT_SHOWN = 5;
 
 const bigPictureElement = document.querySelector('.big-picture');
 const bodyElement = document.querySelector('body');
 const closePictureButton = bigPictureElement.querySelector('.big-picture__cancel');
 
+const commentsListElement = bigPictureElement.querySelector('.social__comments');
+const commentCountElement = bigPictureElement.querySelector('.social__comment-count-shown');
+const totalCommentCountElement = bigPictureElement.querySelector('.social__comment-total-count');
+const commentsLoaderElements = bigPictureElement.querySelector('.comments-loader');
+
+const commentElement = document
+  .querySelector('#comment')
+  .content
+  .querySelector('.social__comment');
+
+let commentsCountShown = 0;
+let comments = [];
+
+const createComment = ({ avatar, message, name }) => {
+  const newComment = commentElement.cloneNode(true);
+
+  newComment.querySelector('.social__picture').src = avatar;
+  newComment.querySelector('.social__picture').alt = name;
+  newComment.querySelector('.social__text').textContent = message;
+
+  return newComment;
+};
+
+const renderComments = () => {
+  commentsCountShown += COMMENT_COUNT_SHOWN;
+
+  if(commentsCountShown >= comments.length) {
+    commentsLoaderElements.classList.add('hidden');
+    commentsCountShown = comments.length;
+  } else {
+    commentsLoaderElements.classList.remove('hidden');
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  for (let i = 0; i < commentsCountShown; i++) {
+    const comment = createComment(comments[i]);
+    fragment.append(comment);
+  }
+
+  commentsListElement.innerHTML = '';
+
+  commentsListElement.append(fragment);
+
+  commentCountElement.textContent = commentsCountShown;
+  totalCommentCountElement.textContent = comments.length;
+};
+
+const onCommentsLoaderClick = () => renderComments();
 
 const hidePicture = () => {
+  commentsCountShown = 0;
   bigPictureElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
-  document.addEventListener('keydown, onDocumentKeydown');
+  document.removeEventListener('keydown, onDocumentKeydown');
 };
 
 const onClosePictureButtonClick = () => {
@@ -24,7 +74,7 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const renderPicture = ({ url, description, likes, comments }) => {
+const renderPicture = ({ url, description, likes }) => {
   bigPictureElement.querySelector('.big-picture__img img').src = url;
   bigPictureElement.querySelector('.big-picture__img img').alt = description;
   bigPictureElement.querySelector('.likes-count').textContent = likes;
@@ -36,55 +86,15 @@ const showPicture = (pictureData) => {
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 
-  renderComments(pictureData.comments);
+  comments = pictureData.comments;
+  if (comments.length > 0){
+    renderComments();
+  }
+
   renderPicture(pictureData);
-  initCommentList();
 };
 
 closePictureButton.addEventListener('click', onClosePictureButtonClick);
+commentsLoaderElements.addEventListener('click', onCommentsLoaderClick);
 
 export { showPicture };
-
-// import { isEscapeKey } from './util';
-
-// const renderBigPicture = (picture) => {
-//   const comments = bigPicture.querySelector('.big-picture__social');
-//
-//   const commentsList = document.querySelector('.social-comments');
-//   const addComments = commentsList.querySelector('.social__comments-loader')
-//     .content
-//     .querySelector('.social__comment');
-//   const commentCount = comments.querySelector('.social-comment_count');
-
-//   commentCount.classList.add('hidden');
-//   addComments.classList.add('hidden');
-
-//   //После открытия окна добавьте тегу <body> класс modal-open, чтобы контейнер с фотографиями позади не прокручивался при скролле. При закрытии окна не забудьте удалить этот класс.
-
-
-//   const similarListFragment = document.createDocumentFragment();
-//   //Я запуталась!!!)))))))))
-//   // Адрес изображения url подставьте как src изображения внутри блока .big-picture__img.
-//
-//   //Количество лайков likes подставьте как текстовое содержание элемента .likes-count.
-//   comments.querySelector('.likes-count').textContent = pictureData.likes;
-//   //Описание фотографии description вставьте строкой в блок .social__caption.
-
-
-//
-
-//   closeButton.addEventListener('click', () => {
-//
-//   });
-
-//   document.addEventListener('keydown', (evt) => {
-//     if(isEscapeKey(evt)) {
-//       evt.preventDefault();
-//       bigPicture.classList.add('hidden');
-//       body.classList.remove('modal-open');
-//     }
-//   });
-// };
-
-
-// export {renderBigPicture};
