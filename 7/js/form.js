@@ -16,7 +16,7 @@ const inputElement = uploadFormElement.querySelector('.img-upload__input');
 const hashtagFieldElement = uploadFormElement.querySelector('.text__hashtags');
 const commentFieldElement = uploadFormElement.querySelector('.text__descriptions');
 
-const pristine = new Pristine(uploadFormElement, {
+const pristine = new window.Pristine(uploadFormElement, {
   classTo: '.img-upload__field-wrapper',
   errorTextParent: '.img-upload__field-wrapper',
   errorTextClass:'.img-upload__field-wrapper--error',
@@ -109,5 +109,5 @@ const initUploadPhoto = () => {
   uploadFormElement.addEventListener('click', onFormSubmit);
 };
 
-export {initUploadPhoto};
+export { initUploadPhoto };
 
