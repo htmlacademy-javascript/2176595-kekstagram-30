@@ -1,4 +1,3 @@
-import { normalizePath } from 'vite';
 import { isEscapeKey } from './util.js';
 
 const VALID_SYMBOLS = /^#[a-zа-я0-9]{1,19}$/i;
