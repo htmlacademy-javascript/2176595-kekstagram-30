@@ -1,4 +1,9 @@
 import { isEscapeKey } from './util.js';
+import {
+  init as initEffect,
+  reset as resetEffect
+} from './effect.js';
+import { resetScale } from './scale.js';
 
 const VALID_SYMBOLS = /^#[a-zа-я0-9]{1,19}$/i;
 const MAX_HASHTAG_NUMBER = 25;
@@ -17,9 +22,9 @@ const hashtagFieldElement = uploadFormElement.querySelector('.text__hashtags');
 const commentFieldElement = uploadFormElement.querySelector('.text__descriptions');
 
 const pristine = new window.Pristine(uploadFormElement, {
-  classTo: '.img-upload__field-wrapper',
-  errorTextParent: '.img-upload__field-wrapper',
-  errorTextClass:'.img-upload__field-wrapper--error',
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass:'img-upload__field-wrapper--error',
 });
 
 const openPictureForm = () => {
@@ -29,6 +34,8 @@ const openPictureForm = () => {
 };
 
 const closePictureForm = () => {
+  resetEffect();
+  resetScale();
   uploadFormElement.reset();
   pristine.reset();
   uploadOverlayElement.classList.add('hidden');
@@ -80,7 +87,7 @@ const onFormSubmit = (evt) => {
 
 //Валидаторы
 pristine.addValidator(
-  inputElement,
+  hashtagFieldElement,
   hasValidNumber,
   ErrorMessage.INVALID_COUNT_TAGS,
   3,
@@ -88,7 +95,7 @@ pristine.addValidator(
 );
 
 pristine.addValidator(
-  inputElement,
+  hashtagFieldElement,
   hasValidTags,
   ErrorMessage.INVALID_TAGS,
   1,
@@ -96,7 +103,7 @@ pristine.addValidator(
 );
 
 pristine.addValidator(
-  inputElement,
+  hashtagFieldElement,
   hasUniqueTags,
   ErrorMessage.NOT_UNIQUE_TAGS,
   1,
@@ -106,8 +113,8 @@ pristine.addValidator(
 const initUploadPhoto = () => {
   inputElement.addEventListener('change', onFileInputChange);
   closeUploadImageButton.addEventListener('click', onCloseUploadImageButtonClick);
-  uploadFormElement.addEventListener('click', onFormSubmit);
+  uploadFormElement.addEventListener('submit', onFormSubmit);
+  initEffect();
 };
 
 export { initUploadPhoto };
-
