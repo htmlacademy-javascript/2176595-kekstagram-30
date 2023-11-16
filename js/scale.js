@@ -21,7 +21,7 @@ const onSmallerButtonClick = () => {
   );
 };
 
-const onBiggerButtonClick = () => {
+const onBiggerButtonClick = () => {//клик
   scaleImage(
     Math.min(parseInt(scaleInputElement.value, 10) + SCALE_STEP, MAX_SCALE)
   );
