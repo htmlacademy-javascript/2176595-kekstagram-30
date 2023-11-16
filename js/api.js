@@ -24,11 +24,11 @@ const request = async(url, method = HttpMethod.GET, body = null) => {
   return response.json();
 };
 
-const loadPictures = async() => {
+const loadPictures = async () => { // Почему здесь возникает ошибка
   return request(SERVER_URL + ServerRoute.GET_DATA);
 };
 
-const sendPicture = async(pictureData) => {
+const sendPicture = async (pictureData) => {
   return request(
     SERVER_URL + ServerRoute.SEND_DATA,
     HttpMethod.POST,
