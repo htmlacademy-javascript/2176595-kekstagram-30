@@ -4,6 +4,8 @@ import {
   reset as resetEffect
 } from './effect.js';
 import { resetScale } from './scale.js';
+import { sendPicture } from './api.js';
+import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const VALID_SYMBOLS = /^#[a-zа-я0-9]{1,19}$/i;
 const MAX_HASHTAG_NUMBER = 25;
@@ -13,6 +15,11 @@ const ErrorMessage = {
   INVALID_TAGS: 'Неправильный хэш-тег',
 };
 
+const SubmitButtonCaption = {
+  SUBMITTING: 'Отправляю...',
+  IDLE: 'Опубликовано',
+};
+
 const bodyElement = document.querySelector('body');
 const uploadFormElement = document.querySelector('.img-upload__form');
 const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
@@ -20,6 +27,14 @@ const closeUploadImageButton = uploadFormElement.querySelector('.img-upload__can
 const inputElement = uploadFormElement.querySelector('.img-upload__input');
 const hashtagFieldElement = uploadFormElement.querySelector('.text__hashtags');
 const commentFieldElement = uploadFormElement.querySelector('.text__descriptions');
+const submitButtonElement = uploadFormElement.querySelector('.img-upload__submit');
+
+const toggleSubmitButton = (isDisabled) => {
+  submitButtonElement.disabled = isDisabled;
+  submitButtonElement.textContent = isDisabled
+    ? SubmitButtonCaption.SUBMITTING
+    : SubmitButtonCaption.IDLE;
+};
 
 const pristine = new window.Pristine(uploadFormElement, {
   classTo: 'img-upload__field-wrapper',
@@ -55,8 +70,12 @@ const isTextFieldFocus = () =>
   document.activeElement === hashtagFieldElement ||
   document.activeElement === commentFieldElement;
 
+const errorMessageExists = () => {
+  Boolean(document.querySelector('.error'));
+};
+
 function onDocumentKeydown(evt) {
-  if(isEscapeKey(evt) && !isTextFieldFocus()) {
+  if(isEscapeKey(evt) && !isTextFieldFocus() && !errorMessageExists()) {
     evt.preventDefault();
     closePictureForm();
   }
@@ -80,9 +99,26 @@ const hasUniqueTags = (value) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-const onFormSubmit = (evt) => {
+const sendForm = async (formElement) => {
+  if (! pristine.validate()) {
+    return;
+  }
+
+  try {
+    toggleSubmitButton(true);
+    await sendPicture(new FormData(formElement));
+    toggleSubmitButton(false);
+    closePictureForm();
+    showSuccessMessage();
+  } catch {
+    toggleSubmitButton(false);
+    showErrorMessage();
+  }
+};
+
+const onFormSubmit = async (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  sendForm(evt.target);
 };
 
 //Валидаторы
