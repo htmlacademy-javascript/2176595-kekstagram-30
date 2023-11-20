@@ -24,16 +24,12 @@ const request = async(url, method = HttpMethod.GET, body = null) => {
   return response.json();
 };
 
-const loadPictures = async() => {
-  return request(SERVER_URL + ServerRoute.GET_DATA);
-};
+const loadPictures = async () => request(SERVER_URL + ServerRoute.GET_DATA);
 
-const sendPicture = async(pictureData) => {
-  return request(
-    SERVER_URL + ServerRoute.SEND_DATA,
-    HttpMethod.POST,
-    pictureData
-  );
-}
+const sendPicture = async (pictureData) => request(
+  SERVER_URL + ServerRoute.SEND_DATA,
+  HttpMethod.POST,
+  pictureData
+);
 
 export { loadPictures, sendPicture };
