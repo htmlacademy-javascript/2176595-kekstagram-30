@@ -8,6 +8,7 @@ import { sendPicture } from './api.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const VALID_SYMBOLS = /^#[a-zа-я0-9]{1,19}$/i;
+const FILE_TYPES = ['jpg', 'png', 'jpeg'];
 const MAX_HASHTAG_NUMBER = 25;
 const ErrorMessage = {
   INVALID_COUNT_TAGS: `Максимум ${MAX_HASHTAG_NUMBER} хэштегов`,
@@ -28,6 +29,9 @@ const inputElement = uploadFormElement.querySelector('.img-upload__input');
 const hashtagFieldElement = uploadFormElement.querySelector('.text__hashtags');
 const commentFieldElement = uploadFormElement.querySelector('.text__descriptions');
 const submitButtonElement = uploadFormElement.querySelector('.img-upload__submit');
+const photoPreview = uploadFormElement.querySelector('.img-upload__preview img');
+const effectPreviews = uploadFormElement.querySelectorAll('.effects__preview');
+
 
 const toggleSubmitButton = (isDisabled) => {
   submitButtonElement.disabled = isDisabled;
@@ -58,7 +62,20 @@ const closePictureForm = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
+
 const onFileInputChange = () => {
+  const file = inputElement.files[0];
+
+  if (file && isValidType(file)) {
+    photoPreview.src = URL.createObjectURL(file);
+    effectPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url('${photoPreview.src}')`;
+    });
+  }
   openPictureForm();
 };
 
@@ -70,12 +87,11 @@ const isTextFieldFocus = () =>
   document.activeElement === hashtagFieldElement ||
   document.activeElement === commentFieldElement;
 
-const errorMessageExists = () => {
-  Boolean(document.querySelector('.error'));
-};
+const errorMessageExists = () => Boolean(document.querySelector('.error'));
+
 
 function onDocumentKeydown(evt) {
-  if(isEscapeKey(evt) && !isTextFieldFocus() && !errorMessageExists()) {
+  if (isEscapeKey(evt) && !isTextFieldFocus() && !errorMessageExists()) {
     evt.preventDefault();
     closePictureForm();
   }
