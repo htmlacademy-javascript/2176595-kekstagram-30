@@ -9,7 +9,7 @@ import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const VALID_SYMBOLS = /^#[a-zа-я0-9]{1,19}$/i;
 const FILE_TYPES = ['jpg', 'png', 'jpeg'];
-const MAX_HASHTAG_NUMBER = 25;
+const MAX_HASHTAG_NUMBER = 5;
 const ErrorMessage = {
   INVALID_COUNT_TAGS: `Максимум ${MAX_HASHTAG_NUMBER} хэштегов`,
   NOT_UNIQUE_TAGS: 'Хэш-теги повторяются',
@@ -91,7 +91,7 @@ const errorMessageExists = () => Boolean(document.querySelector('.error'));
 
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !isTextFieldFocus() && !errorMessageExists()) {
+  if (evt.key === 'Escape' && !isTextFieldFocus() && !errorMessageExists()) {
     evt.preventDefault();
     closePictureForm();
   }
@@ -116,7 +116,7 @@ const hasUniqueTags = (value) => {
 };
 
 const sendForm = async (formElement) => {
-  if (! pristine.validate()) {
+  if (!pristine.validate()) {
     return;
   }
 

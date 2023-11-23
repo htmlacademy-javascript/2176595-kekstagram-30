@@ -1,4 +1,3 @@
-import { renderGallery } from './gallery.js';
 import { renderThumbnails } from './thumbnail.js';
 import { debounce } from './util.js';
 
