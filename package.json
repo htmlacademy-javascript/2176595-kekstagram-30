@@ -11,7 +11,7 @@
     "url": "https://github.com/htmlacademy-javascript/2176595-kekstagram-30/issues"
   },
   "devDependencies": {
-    "eslint": "^8.48.0",
+    "eslint": "8.48.0",
     "eslint-config-htmlacademy": "9.1.1",
     "vite": "4.4.9"
   },
@@ -26,8 +26,6 @@
   },
   "homepage": "https://github.com/htmlacademy-javascript/2176595-kekstagram-30#readme",
   "main": "index.js",
-  "dependencies": {
-  },
   "keywords": [],
   "author": ""
 }
