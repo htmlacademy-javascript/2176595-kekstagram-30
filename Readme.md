@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Darina Smorkalova](https://up.htmlacademy.ru/javascript/30/user/2176595).
-* Наставник: `Неизвестно`.
+* Наставник: [Анастасия Гущина] (https://htmlacademy.ru/profile/vanastasiya).gi
 
 ---
 
