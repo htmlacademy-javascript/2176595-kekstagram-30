@@ -9,7 +9,7 @@ import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const VALID_SYMBOLS = /^#[a-zа-я0-9]{1,19}$/i;
 const FILE_TYPES = ['jpg', 'png', 'jpeg'];
-const MAX_HASHTAG_NUMBER = 25;
+const MAX_HASHTAG_NUMBER = 5;
 const ErrorMessage = {
   INVALID_COUNT_TAGS: `Максимум ${MAX_HASHTAG_NUMBER} хэштегов`,
   NOT_UNIQUE_TAGS: 'Хэш-теги повторяются',
@@ -27,7 +27,7 @@ const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overl
 const closeUploadImageButton = uploadFormElement.querySelector('.img-upload__cancel');
 const inputElement = uploadFormElement.querySelector('.img-upload__input');
 const hashtagFieldElement = uploadFormElement.querySelector('.text__hashtags');
-const commentFieldElement = uploadFormElement.querySelector('.text__descriptions');
+const commentFieldElement = uploadFormElement.querySelector('.text__description');
 const submitButtonElement = uploadFormElement.querySelector('.img-upload__submit');
 const photoPreview = uploadFormElement.querySelector('.img-upload__preview img');
 const effectPreviews = uploadFormElement.querySelectorAll('.effects__preview');
@@ -116,7 +116,7 @@ const hasUniqueTags = (value) => {
 };
 
 const sendForm = async (formElement) => {
-  if (! pristine.validate()) {
+  if (!pristine.validate()) {
     return;
   }
 

@@ -5,7 +5,6 @@ const COMMENT_COUNT_SHOWN = 5;
 const bigPictureElement = document.querySelector('.big-picture');
 const bodyElement = document.querySelector('body');
 const closePictureButton = bigPictureElement.querySelector('.big-picture__cancel');
-
 const commentsListElement = bigPictureElement.querySelector('.social__comments');
 const commentCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
 const totalCommentCountElement = bigPictureElement.querySelector('.social__comment-total-count');
@@ -32,7 +31,7 @@ const createComment = ({ avatar, message, name }) => {
 const renderComments = () => {
   commentsCountShown += COMMENT_COUNT_SHOWN;
 
-  if(commentsCountShown >= comments.length) {
+  if (commentsCountShown >= comments.length) {
     commentsLoaderElements.classList.add('hidden');
     commentsCountShown = comments.length;
   } else {
