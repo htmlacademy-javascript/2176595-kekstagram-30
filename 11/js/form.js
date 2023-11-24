@@ -27,7 +27,7 @@ const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overl
 const closeUploadImageButton = uploadFormElement.querySelector('.img-upload__cancel');
 const inputElement = uploadFormElement.querySelector('.img-upload__input');
 const hashtagFieldElement = uploadFormElement.querySelector('.text__hashtags');
-const commentFieldElement = uploadFormElement.querySelector('.text__descriptions');
+const commentFieldElement = uploadFormElement.querySelector('.text__description');
 const submitButtonElement = uploadFormElement.querySelector('.img-upload__submit');
 const photoPreview = uploadFormElement.querySelector('.img-upload__preview img');
 const effectPreviews = uploadFormElement.querySelectorAll('.effects__preview');
@@ -91,7 +91,7 @@ const errorMessageExists = () => Boolean(document.querySelector('.error'));
 
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !isTextFieldFocus() && !errorMessageExists()) {
+  if (isEscapeKey(evt) && !isTextFieldFocus() && !errorMessageExists()) {
     evt.preventDefault();
     closePictureForm();
   }
